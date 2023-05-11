@@ -31,7 +31,6 @@ function EditPopup(props) {
       setEditedRow((prevRow) => ({ ...prevRow, [name]: value }));
     }
   }
-
   function NameSplit(fullName, position) {
     const nameParts = fullName.split(" ");
     const lastName = nameParts.pop(); // Get the last word as last name
