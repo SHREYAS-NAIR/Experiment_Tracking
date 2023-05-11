@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import TableComponent from "./Table";
 import "./Options.css";
-import Button from "./Button";
 
 function Options(props) {
   const [selectedTab, setSelectedTab] = useState("tab1");
@@ -9,37 +8,40 @@ function Options(props) {
   return (
     <div>
       <div className="tab-container">
-          <div
-            className={`tab ${selectedTab === "tab1" && "active"}`}
-            onClick={() => setSelectedTab("tab1")}
-          >
-            PIPELINES
-          </div>
-          <div
-            className={`tab ${selectedTab === "tab2" && "active"}`}
-            onClick={() => setSelectedTab("tab2")}
-          >
-            EXPERIMENT TRACKING
-          </div>
-          <div className="GoToServing"><Button name="Go to Serving"/></div>
+        <div
+          className={`tab ${selectedTab === "tab1" && "active"}`}
+          onClick={() => setSelectedTab("tab1")}
+        >
+          USER MANAGEMENT
+        </div>
+        <div
+          className={`tab ${selectedTab === "tab2" && "active"}`}
+          onClick={() => setSelectedTab("tab2")}
+        >
+          ROLE MANAGEMENT
+        </div>
       </div>
       <div className="tab-content">
         {selectedTab === "tab1" ? (
-          <Tab1Content />
+          <Tab1Content data={props.data} />
         ) : (
-          <Tab2Content data={props.data} />
+          <Tab2Content />
         )}
       </div>
     </div>
   );
 }
 
-function Tab1Content() {
-  return <div>Yet to be Designed.</div>;
+function Tab1Content({ data, setData }) {
+  return (
+    <div>
+      <TableComponent data={data} setData={setData} />
+    </div>
+  );
 }
 
-function Tab2Content(props) {
-  return <div><TableComponent data={props.data} /></div>;
+function Tab2Content() {
+  return <div>Yet to be Designed.</div>;
 }
 
 export default Options;

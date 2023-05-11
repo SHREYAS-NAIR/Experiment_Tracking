@@ -1,66 +1,49 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./Table.css";
 import Button from "./Button";
 import Add from "../Pics/Add.png";
-import Filter from "../Pics/Filter.png";
 import Delete from "../Pics/Delete.png";
-import Popup from "./Popup";
+import EditPopup from "./EditPopup";
+import Edit from "../Pics/Edit.png";
 
-function TableComponent(props) {
-  const [data, setData] = useState(props.data);
-  const [statusFilter, setStatusFilter] = useState("");
-  const [createdByFilter, setCreatedByFilter] = useState("");
-  const [showStatusInput, setShowStatusInput] = useState(false);
-  const [showCreatedByInput, setShowCreatedByInput] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupData, setPopupData] = useState({});
+function TableComponent(props) {  // removed local data state and used props
+  const [editRow, setEditRow] = useState(null);
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [rowNumber, setRowNumber] = useState(null);
 
-  const handleStatusFilter = (event) => {
-    setStatusFilter(event.target.value);
-  };
-
-  const handleCreatedByFilter = (event) => {
-    setCreatedByFilter(event.target.value);
-  };
-
-  const handleDeleteChecked = () => {
-    const filteredData = data.filter((row) => !row.checked);
-    setData(filteredData);
-  };
-
-  const filteredData = data.filter(
-    (row) =>
-      row.status.toLowerCase().includes(statusFilter.toLowerCase()) &&
-      row.createdBy.toLowerCase().includes(createdByFilter.toLowerCase())
-  );
-
-  // Define a function to toggle the show/hide state for the Status input field
-  const toggleStatusInput = () => {
-    setShowStatusInput(!showStatusInput);
-  };
-
-  // Define a function to toggle the show/hide state for the Created By input field
-  const toggleCreatedByInput = () => {
-    setShowCreatedByInput(!showCreatedByInput);
-  };
-
+  function assignRowNumber(assignedRowNumber) {
+    console.log(rowNumber);
+    setRowNumber(assignedRowNumber);
+  }
+  
   function handleClick(row) {
-    setShowPopup(true);
-    setPopupData(row);
+    setEditRow(row);
+    setShowEditPopup(true);
   }
 
-  function handleClose() {
-    setShowPopup(false);
+  function handleUpdate(updatedRow) {
+    const newData = props.data.map((row) => {
+      if (row.id === updatedRow.id) {
+        return updatedRow;
+      }
+      return row;
+    });
+    setShowEditPopup(false);
+  }
+
+  function handleCancel() {
+    setEditRow(null);
+    setShowEditPopup(false);
   }
 
   function Status(props) {
     const { status } = props;
 
     let statusClass = "";
-    if (status === "success") {
-      statusClass = "success";
-    } else if (status === "failed") {
-      statusClass = "failed";
+    if (status === "Active") {
+      statusClass = "Active";
+    } else if (status[0] === "P") {
+      statusClass = "Pending";
     }
 
     return <span className={statusClass}>{status}</span>;
@@ -69,125 +52,87 @@ function TableComponent(props) {
   return (
     <div className="TableContainer">
       <div className="TableButtons">
-        <Button
-          onClick={() => console.log("Add new run clicked")}
-          name="New Run"
+        <div onClick={() => console.log("Add new user clicked")}>
+          <Button name="New User">
+            <img src={Add} alt="Not Found" />
+          </Button>
+        </div>
+        <div onClick={() => handleClick(rowNumber || 0)}>
+          <Button name="Edit">
+            <img src={Edit} alt="Not Found" />
+          </Button>
+        </div>
+        <div
+          onClick={() => {
+            console.log("Delete Clicked");
+          }}
         >
-          <img src={Add} alt="Not Found"></img>
-        </Button>
-        <Button onClick={() => console.log("Filter clicked")} name="Filter">
-          <img src={Filter} alt="Not Found"></img>
-        </Button>
-        <Button onClick={handleDeleteChecked} name="Delete Checked">
-          <img src={Delete} alt="Not Found"></img>
-        </Button>
+          <Button name="Delete">
+            <img src={Delete} alt="Not Found" />
+          </Button>
+        </div>
       </div>
       <div className="table-wrapper">
         <table>
           <thead>
-            <tr className="topHeader">
-              <th colSpan="7"></th>
-              <th colSpan="4">Metrics</th>
-            </tr>
             <tr className="bottomHeader">
-              <th style={{ width: "5%" }}>Select</th>
-              <th style={{ width: "15%" }}>Run ID</th>
-              <th style={{ width: "7%" }}>Run Name</th>
-              <th style={{ width: "7%" }}>
-                <div>
-                  <label
-                    htmlFor="statusFilter"
-                    style={{width: "100%"}}
-                  >
-                    Status
-                  </label>
-                  <img
-                    onClick={toggleStatusInput}
-                    src={Filter}
-                    alt="Not Found"
-                  ></img>
-                  <br />
-                  {showStatusInput && (
-                    <input
-                      id="statusFilter"
-                      type="text"
-                      style={{width: "100%"}}
-                      value={statusFilter}
-                      placeholder="Search..."
-                      onChange={handleStatusFilter}
-                    />
-                  )}
-                </div>
+              <th colSpan={2} style={{ paddingLeft: "95px" }}>
+                Full Name
               </th>
-              <th style={{ width: "10%" }}>
-                <div>
-                  <label htmlFor="createdByFilter">Created By</label>
-                  <img
-                    onClick={toggleCreatedByInput}
-                    src={Filter}
-                    alt="Not Found"
-                  ></img>
-                  <br />
-                  {showCreatedByInput && (
-                    <input
-                      id="createdByFilter"
-                      type="text"
-                      style={{width: "100%"}}
-                      value={createdByFilter}
-                      placeholder="Search..."
-                      onChange={handleCreatedByFilter}
-                    />
-                  )}
-                </div>
-              </th>
-              <th style={{ width: "10%" }}>Start Time</th>
-              <th style={{ width: "10%" }}>End Time</th>
-              <th style={{ width: "9%" }}>Mean Absolute</th>
-              <th style={{ width: "11%" }}>Mean Square Error</th>
-              <th style={{ width: "11%" }}>Root Mean Square</th>
-              <th style={{ width: "4%" }}>Score</th>
+              <th>User Email</th>
+              <th>User Role</th>
+              <th>Department</th>
+              <th>Business Unit</th>
+              <th>Created By</th>
+              <th>Created At</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((row) => (
+            {props.data.map((row) => (
               <tr key={row.id}>
                 <td>
                   <input
                     type="checkbox"
-                    checked={row.checked}
+                    checked={row.checked || false}
                     className="my-checkbox"
                     style={{ cursor: "pointer" }}
-                    onChange={() => {
-                      const newData = [...data];
+                    onChange={(e) => {
+                      const newData = [...props.data];
                       const index = newData.findIndex((d) => d.id === row.id);
                       newData[index].checked = !newData[index].checked;
-                      setData(newData);
+                      if (e.target.checked) {
+                        assignRowNumber(row);
+                      } else {
+                        assignRowNumber(null);
+                      }
                     }}
                   />
                 </td>
-                <td
-                  className="RunId"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleClick(row)}
-                >
-                  {row.RunId}
+                <td className="fullName" style={{ cursor: "pointer" }}>
+                  {row.fullName}
                 </td>
-                <td>{row.name}</td>
+                <td>{row.userEmail}</td>
+                <td>{row.userRole}</td>
+                <td>{row.department}</td>
+                <td>{row.businessUnit}</td>
+                <td>{row.createdBy}</td>
+                <td>{row.createdAt}</td>
                 <td>
                   <Status status={row.status} />
                 </td>
-                <td>{row.createdBy}</td>
-                <td>{row.startTime}</td>
-                <td>{row.endTime}</td>
-                <td>{row.meanAbsolute}</td>
-                <td>{row.meanSquareError}</td>
-                <td>{row.rootMeanSquareError}</td>
-                <td>{row.score}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        {showPopup && <Popup data={popupData} onClose={handleClose} />}
+        {showEditPopup && (
+          <EditPopup
+            row={editRow}
+            rowNumber={rowNumber}
+            onSave={handleUpdate}
+            onCancel={handleCancel}
+          />
+        )}
       </div>
     </div>
   );
