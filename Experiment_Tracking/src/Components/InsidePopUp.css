@@ -1,0 +1,131 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  background-color: #212b46;
+  border-bottom: 2px solid #313747;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #6a6e79;
+  cursor: pointer;
+  padding: 3px 5px 5px 20px;
+}
+.artifacts {
+  display: flex;
+  color: #e8e8e8;
+}
+.leftSide table {
+  width: 100%;
+}
+.artifacts td {
+  padding: 3px 5px 5px 5px;
+  border: none;
+  text-align: left;
+}
+.leftSide {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  text-transform: uppercase;
+
+  /* text color */
+
+  color: #6a6e79;
+  width: 49.5%;
+}
+.leftSide img{
+  width: 20px;
+  height: auto;
+}
+.seperator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1%;
+  height: 520px;
+  background: #0e141f;
+}
+.seperator img {
+  height: 100px;
+}
+.rightSide {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  
+  color: #5a5a5a;
+  width: 49.5%;
+}
+.rightSide img{
+  width: 16px;
+  height: auto;
+}
+.TableStyle {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+}
+.TableStyle table {
+  margin: 10px 0px 0px 20px;
+  width: 80%;
+}
+.TableStyle thead {
+  border: none;
+  background-color: #212b46;
+  text-align: left;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+.TableStyle thead th {
+  background-color: #212b46;
+  padding-left: 20px;
+  width: 50%;
+}
+.TableStyle td {
+  width: 50%px;
+  padding-left: 20px;
+  background-color: #161d2f;
+  border: 2px solid #070d19;
+  text-align: left;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  /* identical to box height */
+
+  text-transform: uppercase;
+
+  /* text color */
+
+  color: #6a6e79;
+}
+.TableStyle tr {
+  border: 2px solid #070d19;
+}
+.EmptyDiv {
+  width: 100%;
+  height: 30px;
+  background-color: #161d2f;
+  border-bottom: 2px solid #070d19;
+}

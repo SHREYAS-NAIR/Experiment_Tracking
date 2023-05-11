@@ -1,0 +1,39 @@
+.tab-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  row-gap: 10px;
+  color: #ffffff;
+  background-color: #0f131b;
+}
+
+.tab {
+  cursor: pointer;
+  font-family: Nunito;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 10px;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.active {
+  color: #b0d136;
+}
+
+.tab-content {
+  margin: 0px;
+  color: #ffffff;
+}
+
+.GoToServing{
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 10px 20px 10px 0px;
+}
